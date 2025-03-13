@@ -1,330 +1,409 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Calculadora Auxílio Funeral</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #eef0f2;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      color: #333;
-    }
+    <title>Calculadora Auxílio Funeral</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary-color: #005f9e;
+            --secondary-color: #1c8845;
+            --background-color: #f5f7fa;
+            --card-color: #ffffff;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --input-focus: rgba(0, 95, 158, 0.25);
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
 
-    .calculator-container {
-      width: 100%;
-      max-width: 400px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .calculator {
-      width: 100%;
-      padding: 30px;
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-      margin-bottom: 25px;
-      border: 1px solid #ddd;
-    }
+        body {
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
 
-    h2 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 25px;
-      font-weight: 600;
-    }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
 
-    .input-group {
-      margin-bottom: 25px;
-    }
+        .calculator {
+            background-color: var(--card-color);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
 
-    .input-group label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: 500;
-      color: #555;
-    }
+        .calculator:hover {
+            transform: translateY(-5px);
+        }
 
-    .input-group input {
-      width: 100%;
-      padding: 14px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-      color: #444;
-      transition: border-color 0.3s ease;
-    }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    .input-group input:focus {
-      border-color: #007bff;
-      outline: none;
-      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-    }
+        h2 {
+            color: var(--primary-color);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
 
-    .fixed-value {
-      background-color: #f9f9f9;
-      padding: 14px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-top: 8px;
-      font-size: 16px;
-      color: #444;
-    }
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+        }
 
-    button {
-      padding: 14px 22px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 17px;
-      font-weight: 500;
-      transition: background-color 0.3s ease;
-      width: 100%;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        .form-group {
+            margin-bottom: 22px;
+        }
 
-    button:hover {
-      background-color: #0056b3;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+            font-size: 16px;
+        }
 
-    #result {
-      margin-top: 30px;
-      font-weight: bold;
-    }
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 16px;
+            color: var(--text-color);
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
 
-    #result label {
-      color: #555;
-      display: block;
-      margin-bottom: 10px;
-    }
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px var(--input-focus);
+        }
 
-    #result input {
-      width: 100%;
-      padding: 14px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background-color: #f0f0f0;
-      font-size: 16px;
-      color: #444;
-      font-weight: normal;
-    }
+        .form-control::placeholder {
+            color: #aaa;
+        }
 
-    .link-button {
-      display: block;
-      width: 100%;
-      text-align: center;
-      margin-top: 25px;
-      padding: 14px 22px;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 17px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      box-sizing: border-box;
-    }
+        .fixed-value {
+            background-color: #f9f9f9;
+            padding: 14px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 16px;
+            color: #444;
+        }
 
-    .link-button:hover {
-      background-color: #218838;
-    }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-    footer {
-      background-color: #f9f9f9;
-      padding: 20px;
-      text-align: center;
-      border-top: 1px solid #eee;
-      color: #777;
-      width: 100%;
-      font-size: 0.9em;
-      margin-top: 30px;
-    }
+        .btn:hover {
+            background-color: #004b7e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
 
-    /* Media Queries para Responsividade */
-    @media (max-width: 600px) {
-      .calculator-container {
-        padding: 15px;
-      }
-      .calculator {
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-      }
-      h2 {
-        font-size: 1.8em;
-        margin-bottom: 20px;
-      }
-      .input-group {
-        margin-bottom: 20px;
-      }
-      .input-group label {
-        font-size: 0.95em;
-        margin-bottom: 8px;
-      }
-      .input-group input, .fixed-value, button, #result input {
-        padding: 12px;
-        font-size: 15px;
-        border-radius: 6px;
-      }
-      button, .link-button {
-        padding: 12px 18px;
-        font-size: 16px;
-      }
-      .link-button {
-        margin-top: 20px;
-      }
-      #result {
-        margin-top: 25px;
-      }
-      footer {
-        padding: 15px;
-        font-size: 0.85em;
-      }
-    }
+        .btn:active {
+            transform: translateY(0);
+        }
 
-    @media (max-width: 400px) {
-      .calculator-container {
-        padding: 10px;
-      }
-      .calculator {
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-      }
-      h2 {
-        font-size: 1.6em;
-        margin-bottom: 15px;
-      }
-      .input-group {
-        margin-bottom: 15px;
-      }
-      .input-group label {
-        font-size: 0.9em;
-        margin-bottom: 6px;
-      }
-      .input-group input, .fixed-value, button, #result input {
-        padding: 10px;
-        font-size: 14px;
-        border-radius: 5px;
-      }
-      button, .link-button {
-        padding: 10px 16px;
-        font-size: 15px;
-      }
-      .link-button {
-        margin-top: 15px;
-      }
-      #result {
-        margin-top: 20px;
-      }
-      footer {
-        padding: 10px;
-        font-size: 0.8em;
-      }
-    }
-  </style>
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            margin-top: 20px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #146d35;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .result-box {
+            background-color: #f0f7ff;
+            border: 1.5px solid #cce5ff;
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 20px 15px;
+            color: #777;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .logo {
+            max-width: 180px;
+            margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+
+        .form-col {
+            flex: 1;
+            padding: 0 10px;
+            min-width: 50%;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .calculator {
+                padding: 25px;
+                border-radius: 12px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .form-group label {
+                font-size: 15px;
+            }
+
+            .form-control, .fixed-value {
+                padding: 12px 14px;
+                font-size: 15px;
+            }
+
+            .btn {
+                padding: 14px;
+                font-size: 16px;
+            }
+
+            .form-col {
+                min-width: 100%;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator {
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fadeIn {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
 </head>
 <body>
-  <div class="calculator-container">
-    <div class="calculator">
-      <h2>Calculadora Auxílio Funeral</h2>
+    <div class="container">
+        <div class="calculator fadeIn">
+            <div class="header">
+                <h2>Calculadora Auxílio Funeral</h2>
+                <p class="subtitle">Calcule o valor atualizado com base na UFR-PB</p>
+            </div>
 
-      <div class="input-group">
-        <label for="anoReferencia">Ano de Referência:</label>
-        <input type="number" id="anoReferencia" placeholder="Ex: 2025" value="">
-      </div>
+            <div class="form-group">
+                <label for="anoReferencia">Ano de Referência:</label>
+                <input type="number" id="anoReferencia" class="form-control" placeholder="Digite o ano" min="2000" max="2100">
+            </div>
 
-      <div class="input-group">
-        <label>Valor Base (R$):</label>
-        <div class="fixed-value" id="valorBaseDisplay"></div>
-      </div>
+            <div class="form-group">
+                <label>Valor Base (R$):</label>
+                <div class="fixed-value" id="valorBaseDisplay"></div>
+            </div>
 
-      <div class="input-group">
-        <label for="ufrJaneiroAnterior">UFR Janeiro <span id="anoAnteriorJaneiro"></span>:</label>
-        <input type="text" id="ufrJaneiroAnterior" placeholder="Ex: 65,21">
-      </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="ufrJaneiroAnterior">UFR Janeiro <span id="anoAnteriorJaneiro"></span>:</label>
+                        <input type="text" id="ufrJaneiroAnterior" class="form-control" placeholder="Ex: 65,21">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="ufrDezembroAnterior">UFR Dezembro <span id="anoAnteriorDezembro"></span>:</label>
+                        <input type="text" id="ufrDezembroAnterior" class="form-control" placeholder="Ex: 68,12">
+                    </div>
+                </div>
+            </div>
 
-      <div class="input-group">
-        <label for="ufrDezembroAnterior">UFR Dezembro <span id="anoAnteriorDezembro"></span>:</label>
-        <input type="text" id="ufrDezembroAnterior" placeholder="Ex: 68,12">
-      </div>
+            <button id="calcButton" class="btn">Calcular Auxílio Funeral</button>
 
-      <button onclick="calcularAuxilio()">Calcular Auxílio Funeral</button>
+            <div class="result-container" id="resultContainer" style="display: none;">
+                <div class="form-group">
+                    <label for="auxilioFuneral">Valor Auxílio Funeral <span id="anoAuxilio"></span>:</label>
+                    <div class="result-box" id="auxilioFuneral">Resultado será exibido aqui</div>
+                </div>
+            </div>
 
-      <div id="result" class="input-group">
-        <label for="auxilioFuneral">Valor Auxílio Funeral <span id="anoAuxilio"></span>:</label>
-        <input type="text" id="auxilioFuneral" readonly placeholder="Resultado será exibido aqui">
-      </div>
-
-      <a href="https://www.sefaz.pb.gov.br/info/indices-e-tabelas/ufr-pb" target="_blank" class="link-button">Ver UFRs Atualizadas (SEFAZ-PB)</a>
+            <a href="https://www.sefaz.pb.gov.br/info/indices-e-tabelas/ufr-pb" target="_blank" class="btn btn-secondary">Ver UFRs Atualizadas (SEFAZ-PB)</a>
+        </div>
     </div>
 
     <footer>
-      Feito pela SUPLAN - Superintendência de Obras do Plano de Desenvolvimento do Estado
+        <p>Desenvolvido pela SUPLAN - Superintendência de Obras do Plano de Desenvolvimento do Estado</p>
+        <p>&copy; <span id="currentYear"></span> Todos os direitos reservados</p>
     </footer>
-  </div>
 
-  <script>
-    function atualizarAnos() {
-      var anoReferencia = document.getElementById("anoReferencia").value;
-      var anoAnterior = parseInt(anoReferencia) - 1;
-      document.getElementById("anoAnteriorJaneiro").textContent = anoAnterior;
-      document.getElementById("anoAnteriorDezembro").textContent = anoAnterior;
-      document.getElementById("anoAuxilio").textContent = anoReferencia;
-    }
+    <script>
+        // Inicializar ano atual
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-    function formatNumber(number) {
-      return number.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
+        function atualizarAnos() {
+            var anoReferencia = document.getElementById("anoReferencia").value;
+            if (!anoReferencia) {
+                anoReferencia = new Date().getFullYear();
+                document.getElementById("anoReferencia").value = anoReferencia;
+            }
+            
+            var anoAnterior = parseInt(anoReferencia) - 1;
+            document.getElementById("anoAnteriorJaneiro").textContent = anoAnterior;
+            document.getElementById("anoAnteriorDezembro").textContent = anoAnterior;
+            document.getElementById("anoAuxilio").textContent = anoReferencia;
+        }
 
-    function calcularAuxilio() {
-      atualizarAnos();
-      const valorBase = 4391.23;
-      let ufrJaneiroAnterior = document.getElementById("ufrJaneiroAnterior").value.replace(',', '.');
-      let ufrDezembroAnterior = document.getElementById("ufrDezembroAnterior").value.replace(',', '.');
+        function formatarNumero(numero) {
+            return numero.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
 
-      ufrJaneiroAnterior = parseFloat(ufrJaneiroAnterior);
-      ufrDezembroAnterior = parseFloat(ufrDezembroAnterior);
+        function formatarMoeda(numero) {
+            return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
 
-      if (isNaN(ufrJaneiroAnterior) || isNaN(ufrDezembroAnterior)) {
-        alert("Por favor, preencha os valores de UFR.");
-        return;
-      }
+        function normalizarDecimal(valor) {
+            return valor.replace(/\./g, '').replace(',', '.');
+        }
 
-      if (ufrJaneiroAnterior === 0) {
-        alert("UFR Janeiro não pode ser zero para evitar divisão por zero.");
-        return;
-      }
+        function calcularAuxilio() {
+            atualizarAnos();
+            const valorBase = 4391.26;
+            
+            let ufrJaneiro = document.getElementById("ufrJaneiroAnterior").value;
+            let ufrDezembro = document.getElementById("ufrDezembroAnterior").value;
+            
+            // Normalize decimal inputs (for Brazilian format)
+            ufrJaneiro = normalizarDecimal(ufrJaneiro);
+            ufrDezembro = normalizarDecimal(ufrDezembro);
+            
+            const ufrJaneiroAnterior = parseFloat(ufrJaneiro);
+            const ufrDezembroAnterior = parseFloat(ufrDezembro);
 
-      var auxilioFuneral = valorBase * (ufrDezembroAnterior / ufrJaneiroAnterior);
-      const formattedValue = auxilioFuneral.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      document.getElementById("auxilioFuneral").value = formattedValue;
-    }
+            if (isNaN(ufrJaneiroAnterior) || isNaN(ufrDezembroAnterior)) {
+                alert("Por favor, preencha os valores de UFR corretamente.");
+                return;
+            }
 
-    function initializeCalculator() {
-      atualizarAnos();
-      const valorBase = 4391.26;
-      document.getElementById("valorBaseDisplay").textContent = formatNumber(valorBase);
-      document.getElementById("anoReferencia").value = new Date().getFullYear();
-    }
+            if (ufrJaneiroAnterior <= 0) {
+                alert("UFR Janeiro deve ser maior que zero para evitar divisão por zero.");
+                return;
+            }
 
-    initializeCalculator();
-    document.getElementById("anoReferencia").addEventListener('input', atualizarAnos);
-  </script>
+            var auxilioFuneral = valorBase * (ufrDezembroAnterior / ufrJaneiroAnterior);
+            document.getElementById("auxilioFuneral").textContent = formatarMoeda(auxilioFuneral);
+            document.getElementById("resultContainer").style.display = "block";
+            
+            // Scroll to results
+            document.getElementById("resultContainer").scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function inicializarCalculadora() {
+            const valorBase = 4391.26;
+            document.getElementById("valorBaseDisplay").textContent = formatarMoeda(valorBase);
+            document.getElementById("anoReferencia").value = new Date().getFullYear();
+            atualizarAnos();
+            
+            // Add input mask for decimal values
+            const decimalInputs = document.querySelectorAll("#ufrJaneiroAnterior, #ufrDezembroAnterior");
+            decimalInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value;
+                    value = value.replace(/[^0-9,]/g, '');
+                    
+                    // Ensure only one comma
+                    const commaCount = (value.match(/,/g) || []).length;
+                    if (commaCount > 1) {
+                        value = value.replace(/,/g, function(match, idx) {
+                            return idx === value.lastIndexOf(',') ? ',' : '';
+                        });
+                    }
+                    
+                    e.target.value = value;
+                });
+            });
+        }
+
+        // Initialize the calculator
+        inicializarCalculadora();
+        
+        // Event listeners
+        document.getElementById("anoReferencia").addEventListener('input', atualizarAnos);
+        document.getElementById("calcButton").addEventListener('click', calcularAuxilio);
+        
+        // Add enter key support
+        document.querySelectorAll("input").forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    calcularAuxilio();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
