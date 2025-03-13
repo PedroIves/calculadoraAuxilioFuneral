@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calculadora Auxílio Funeral</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #eef0f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+  }
+  .calculator-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .calculator {
+    width: 100%;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    border: 1px solid #ddd;
+  }
+  h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-weight: 600;
+  }
+  .input-group {
+    margin-bottom: 25px;
+  }
+  .input-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #555;
+  }
+  .input-group input { /* Removed select from selector */
+    width: 100%;
+    padding: 14px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #444;
+    transition: border-color 0.3s ease;
+  }
+  .input-group input:focus { /* Removed select from selector */
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+  .fixed-value {
+    background-color: #f9f9f9;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 8px;
+    font-size: 16px;
+    color: #444;
+  }
+  button {
+    padding: 14px 22px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  #result {
+    margin-top: 30px;
+    font-weight: bold;
+  }
+  #result label {
+    color: #555;
+    display: block;
+    margin-bottom: 10px;
+  }
+  #result input {
+    width: 100%;
+    padding: 14px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    font-size: 16px;
+    color: #444;
+    font-weight: normal;
+  }
+  .link-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 25px;
+    padding: 14px 22px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+  .link-button:hover {
+    background-color: #218838;
+  }
+  footer {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #eee;
+    color: #777;
+    width: 100%;
+    font-size: 0.9em;
+    margin-top: 30px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .calculator-container {
+      padding: 15px;
+    }
+    .calculator {
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    .input-group label {
+      font-size: 0.95em;
+      margin-bottom: 8px;
+    }
+    .input-group input, .input-group select, .fixed-value, button, #result input {
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 6px;
+    }
+    button, .link-button {
+      padding: 12px 18px;
+      font-size: 16px;
+    }
+    .link-button {
+       margin-top: 20px;
+    }
+    #result {
+      margin-top: 25px;
+    }
+    footer {
+      padding: 15px;
+      font-size: 0.85em;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="calculator-container">
+    <div class="calculator">
+      <h2>Calculadora Auxílio Funeral</h2>
+
+      <div class="input-group">
+        <label for="anoReferencia">Ano de Referência:</label>
+        <input type="number" id="anoReferencia" placeholder="Ex: 2025" value=""> <!-- Input type number -->
+      </div>
+
+      <div class="input-group">
+        <label>Valor Base (R$):</label>
+        <div class="fixed-value" id="valorBaseDisplay"></div>
+      </div>
+
+      <div class="input-group">
+        <label for="ufrJaneiroAnterior">UFR Janeiro <span id="anoAnteriorJaneiro"></span>:</label>
+        <input type="text" id="ufrJaneiroAnterior" placeholder="Ex: 65,21">
+      </div>
+
+      <div class="input-group">
+        <label for="ufrDezembroAnterior">UFR Dezembro <span id="anoAnteriorDezembro"></span>:</label>
+        <input type="text" id="ufrDezembroAnterior" placeholder="Ex: 68,12">
+      </div>
+
+      <button onclick="calcularAuxilio()">Calcular Auxílio Funeral</button>
+
+      <div id="result" class="input-group">
+        <label for="auxilioFuneral">Valor Auxílio Funeral <span id="anoAuxilio"></span>:</label>
+        <input type="text" id="auxilioFuneral" readonly placeholder="Resultado será exibido aqui">
+      </div>
+
+      <a href="https://www.sefaz.pb.gov.br/info/indices-e-tabelas/ufr-pb" target="_blank" class="link-button">Ver UFRs Atualizadas (SEFAZ-PB)</a>
+    </div>
+
+    <footer>
+      Feito pela SUPLAN - Superintendência de Obras do Plano de Desenvolvimento do Estado
+    </footer>
+  </div>
+
+<script>
+function atualizarAnos() {
+  var anoReferencia = document.getElementById("anoReferencia").value;
+  var anoAnterior = parseInt(anoReferencia) - 1;
+  document.getElementById("anoAnteriorJaneiro").textContent = anoAnterior;
+  document.getElementById("anoAnteriorDezembro").textContent = anoAnterior;
+  document.getElementById("anoAuxilio").textContent = anoReferencia;
+}
+
+function formatNumber(number) {
+  return number.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function calcularAuxilio() {
+  atualizarAnos();
+  const valorBase = 4391.23;
+  let ufrJaneiroAnterior = document.getElementById("ufrJaneiroAnterior").value.replace(',', '.');
+  let ufrDezembroAnterior = document.getElementById("ufrDezembroAnterior").value.replace(',', '.');
+
+  ufrJaneiroAnterior = parseFloat(ufrJaneiroAnterior);
+  ufrDezembroAnterior = parseFloat(ufrDezembroAnterior);
+
+
+  if (isNaN(ufrJaneiroAnterior) || isNaN(ufrDezembroAnterior)) {
+    alert("Por favor, preencha os valores de UFR.");
+    return;
+  }
+
+  if (ufrJaneiroAnterior === 0) {
+    alert("UFR Janeiro não pode ser zero para evitar divisão por zero.");
+    return;
+  }
+
+  var auxilioFuneral = valorBase * (ufrDezembroAnterior / ufrJaneiroAnterior);
+  const formattedValue = auxilioFuneral.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  document.getElementById("auxilioFuneral").value = formattedValue;
+}
+
+function initializeCalculator() {
+  atualizarAnos();
+  const valorBase = 4391.23;
+  document.getElementById("valorBaseDisplay").textContent = formatNumber(valorBase);
+  document.getElementById("anoReferencia").value = new Date().getFullYear(); // Set current year as default
+}
+
+initializeCalculator();
+document.getElementById("anoReferencia").addEventListener('input', atualizarAnos); // Changed to 'input' event
+</script>
+
+</body>
+</html>
